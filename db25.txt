@@ -1,0 +1,34 @@
+CREATE DATABASE company;
+
+
+USE company;
+
+
+-- Create the Empl table
+CREATE TABLE Empl (e_no INT PRIMARY KEY,e_name VARCHAR(50),post VARCHAR(50),pay_rate DECIMAL(10, 2));
+
+-- Create the Position table CREATE TABLE Position (pos_no INT PRIMARY KEY,post VARCHAR(50));
+
+-- Create the Duty-alloc table
+CREATE TABLE Duty_alloc (pos_no INT, e_no INT, month INT,year INT,shift INT,FOREIGN KEY (pos_no) REFERENCES Position(pos_no),FOREIGN KEY (e_no) REFERENCES Empl(e_no))
+
+-- Insert data into the Empl table
+INSERT INTO Empl (e_no, e_name, post, pay_rate) VALUES(1, 'Sachin', 'Manager', 60000),(2, 'Alice', 'Assistant', 35000),(3, 'Bob', 'Manager', 55000),(4, 'Charlie', 'Technician', 45000);
+
+-- Insert data into the Position table
+INSERT INTO Position (pos_no, post) VALUES(1, 'Manager'),(2, 'Assistant'),(3, 'Technician');
+
+-- Insert data into the Duty-alloc table
+INSERT INTO Duty_alloc (pos_no, e_no, month, year, shift) VALUES(1, 1, 4, 2003, 1),(2, 2, 4, 2003, 2),(1, 3, 4, 2003, 1),(3, 4, 4, 2003, 1);
+
+
+SELECT * FROM Duty_allocWHERE e_no = 1 AND month = 4 AND year = 2003 AND shift = 1;
+
+
+SELECT * FROM Duty_alloc WHERE e_no = 1 AND month = 4 AND year = 2003 AND shift = 1;
+
+
+CREATE VIEW Salary_Statistics AS SELECT post, MIN(pay_rate) AS min_salary, MAX(pay_rate) AS max_salary, AVG(pay_rate) AS avg_salary FROM Empl GROUP BY post;
+
+
+SELECT shift, COUNT(*) as count_of_managers FROM Duty_alloc WHERE pos_no = (SELECT pos_no FROM Position WHERE post = 'Manager') GROUP BY shift;

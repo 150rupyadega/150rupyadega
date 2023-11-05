@@ -1,0 +1,27 @@
+use Institute;
+
+db.createCollection("Students");
+
+db.Students.find();
+
+db.Students.find({ Age: { $gt: 15 } });
+
+db.Students.find().sort({ "Student Name": 1 });
+
+db.Students.updateOne({ RollNo: 3 }, { $set: { Branch: "Computer" } });
+
+db.Students.deleteOne({ RollNo: 1 });
+
+db.Students.find({ "Student Name": /^A/ });
+
+db.Students.count();
+
+db.Students.find().limit(5);
+
+db.Students.find().skip(3);
+
+db.Students.find({ "Address.City": "Pune" }, { "Student Name": 1, _id: 0 });
+
+db.Students.find({}, { "Student Name": 1, _id: 0 });
+
+db.Students.drop();

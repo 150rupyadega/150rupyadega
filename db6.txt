@@ -1,0 +1,36 @@
+-- Create the PL/SQL stored procedure
+CREATE OR REPLACE PROCEDURE proc_Grade (name IN VARCHAR2, total_marks IN NUMBER) AS
+BEGIN
+    IF total_marks >= 990 AND total_marks <= 1500 THEN
+        INSERT INTO Result (Roll, Name, Class) VALUES (NULL, name, 'Distinction');
+    ELSIF total_marks >= 900 AND total_marks <= 989 THEN
+        INSERT INTO Result (Roll, Name, Class) VALUES (NULL, name, 'First Class');
+    ELSIF total_marks >= 825 AND total_marks <= 899 THEN
+        INSERT INTO Result (Roll, Name, Class) VALUES (NULL, name, 'Higher Second Class');
+    ELSE
+        -- Handle other cases or errors as needed
+        DBMS_OUTPUT.PUT_LINE('Marks do not fall into any category for ' || name);
+    END IF;
+END;
+
+
+@marks.sql
+DECLARE
+    v_name VARCHAR2(100);
+    v_total_marks NUMBER;
+BEGIN
+    -- Replace these values with the actual student names and marks
+    v_name := 'Student1';
+    v_total_marks := 1000;
+
+    proc_Grade(v_name, v_total_marks);
+
+    v_name := 'Student2';
+    v_total_marks := 875;
+
+    proc_Grade(v_name, v_total_marks);
+
+    -- Add more students as needed
+
+    COMMIT; -- Save changes to the Result table
+END;

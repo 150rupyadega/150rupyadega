@@ -1,0 +1,48 @@
+CREATE TABLE Employee (
+    eid INT ,
+    ename VARCHAR(255) NOT NULL,
+    address VARCHAR(255),
+    salary DECIMAL(10, 2) ,
+    commission DECIMAL(10, 2)
+);
+
+CREATE TABLE Project (
+    prno INT,
+    addr VARCHAR(255)
+);
+
+INSERT INTO Employee (eid, ename, address, salary, commission) VALUES
+(1, 'Amit', 'Pune', 35000, 5000),
+(2, 'Sneha', 'Pune', 25000, NULL),
+(3, 'Savita', 'Nasik', 28000, 2000),
+(4, 'Pooja', 'Mumbai', 19000, NULL),
+(5, 'Sagar', 'Mumbai', 25000, 3000);
+
+INSERT INTO Project (prno, addr) VALUES
+(10, 'Mumbai'),
+(20, 'Pune'),
+(30, 'Jalgaon');
+
+SELECT DISTINCT address FROM Employee;
+
+SELECT MAX(salary), MIN(salary) FROM Employee;
+
+SELECT * FROM Employee ORDER BY salary ASC;
+
+SELECT ename FROM Employee WHERE address IN ('Nashik', 'Pune');
+
+SELECT ename FROM Employee WHERE commission IS NULL;
+
+UPDATE Employee SET address = 'Nashik' WHERE ename = 'Amit';
+
+SELECT * FROM Employee WHERE ename LIKE 'A%';
+
+SELECT COUNT(*) FROM Employee WHERE address = 'Mumbai';
+
+SELECT DISTINCT address FROM Employee UNION SELECT addr FROM Project;
+
+SELECT address, MIN(salary) FROM Employee GROUP BY address;
+
+SELECT address, MAX(salary) FROM Employee GROUP BY address having max(salary)>26000;
+
+DELETE FROM Employee WHERE salary > 30000;

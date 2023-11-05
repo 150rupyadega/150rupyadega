@@ -1,0 +1,29 @@
+DECLARE
+    v_roll_no INTEGER;
+    v_attendance FLOAT;
+    v_status VARCHAR(2);
+BEGIN
+    -- Accept roll number from the user
+    v_roll_no := &Enter_roll_no;
+
+    -- Retrieve attendance and status from Stud table
+    SELECT Att, Status INTO v_attendance, v_status FROM Stud WHERE Roll = v_roll_no;
+
+    -- Check attendance and set status accordingly
+    IF (v_attendance < 75) THEN
+        DBMS_OUTPUT.PUT_LINE('Term not granted');
+        v_status := 'D';
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Term granted');
+        v_status := 'ND';
+    END IF;
+
+    -- Update the status in Stud table
+    UPDATE Stud SET Status = v_status WHERE Roll = v_roll_no;
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('No record found for the provided roll number.');
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('An error occurred: ' || SQLERRM);
+END;

@@ -1,0 +1,49 @@
+
+-- Create a PL/SQL stored function
+CREATE OR REPLACE FUNCTION get_Student_Class(name IN VARCHAR2, total_marks IN NUMBER) RETURN VARCHAR2 IS
+    student_class VARCHAR2(50);
+BEGIN
+    IF total_marks >= 990 AND total_marks <= 1500 THEN
+        student_class := 'Distinction';
+    ELSIF total_marks >= 900 AND total_marks <= 989 THEN
+        student_class := 'First Class';
+    ELSIF total_marks >= 825 AND total_marks <= 899 THEN
+        student_class := 'Higher Second Class';
+    ELSE
+        student_class := 'Not categorized';
+    END IF;
+
+    -- Insert the result into the Result table
+    INSERT INTO Result (Roll, Name, Class) VALUES (NULL, name, student_class);
+
+    -- Return the student's class
+    RETURN student_class;
+END;
+
+
+
+@marksfun.sql
+-- PL/SQL block to use the function
+DECLARE
+    v_name VARCHAR2(100);
+    v_total_marks NUMBER;
+    v_student_class VARCHAR2(50);
+BEGIN
+    v_name := 'Student1';
+    v_total_marks := 1000;
+    
+    v_student_class := get_Student_Class(v_name, v_total_marks);
+    
+    DBMS_OUTPUT.PUT_LINE('Student: ' || v_name || ', Class: ' || v_student_class);
+
+    v_name := 'Student2';
+    v_total_marks := 875;
+
+    v_student_class := get_Student_Class(v_name, v_total_marks);
+
+    DBMS_OUTPUT.PUT_LINE('Student: ' || v_name || ', Class: ' || v_student_class);
+    
+    -- Add more students as needed
+    
+    COMMIT; -- Save changes to the Result table
+END;

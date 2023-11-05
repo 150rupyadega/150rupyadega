@@ -1,0 +1,59 @@
+create database db24;
+use db24;
+Create the Emp table
+CREATE TABLE Emp (
+    emp_id INT PRIMARY KEY,
+    ename VARCHAR(255),
+    street VARCHAR(255),
+    city VARCHAR(255)
+);
+
+
+CREATE TABLE Company (
+    c_id INT PRIMARY KEY,
+    cname VARCHAR(255),
+    city VARCHAR(255)
+);
+
+
+CREATE TABLE works (
+    emp_id INT,
+    c_id INT,
+    ename VARCHAR(255),
+    cname VARCHAR(255),
+    sal DECIMAL(10, 2),
+    FOREIGN KEY (emp_id) REFERENCES Emp(emp_id),
+    FOREIGN KEY (c_id) REFERENCES Company(c_id)
+);
+
+
+CREATE TABLE Manager (
+    mgr_id INT PRIMARY KEY,
+    mgrname VARCHAR(255)
+);
+1)
+ INSERT INTO Company (c_id, cname, city) VALUES (1, 'ABC', 'Pune');
+ INSERT INTO Emp VALUES (1, 'XYZ', 'Baner', 'Pune');
+INSERT INTO Emp VALUES (2, 'PQR', 'FC Road', 'Pune');
+ INSERT INTO Company (c_id, cname, city) VALUES (2, 'Bosch', 'Pune');
+ INSERT INTO works VALUES (1, 1, 'XYZ', 'ABC', 11.11);
+ INSERT INTO works VALUES (2, 2, 'PQR', 'Bosch', 21.21);
+INSERT INTO Manager VALUES (1, 'PQR');
+
+2) UPDATE works
+    -> SET sal =
+    ->     CASE
+    ->         WHEN sal <= 20000 THEN sal * 1.1
+    ->         ELSE sal * 1.03
+    ->     END
+    -> WHERE cname = 'Mbank';
+3)
+
+ SELECT e.ename
+    -> FROM Emp e
+    -> JOIN works w ON e.emp_id = w.emp_id
+    -> JOIN Company c ON w.c_id = c.c_id
+    -> WHERE c.cname = 'Bosch' AND c.city = 'Pune';
+4)
+DELETE FROM works
+    -> WHERE c_id = (SELECT c_id FROM Company WHERE cname = 'SBC Company') AND sal > 50000;

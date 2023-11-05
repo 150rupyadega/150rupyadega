@@ -1,0 +1,24 @@
+db.createCollection("Teachers")
+db.createCollection("Department")
+db.createCollection("Students")
+
+ db.Teachers.insertMany([ { Tname: "Teacher1", dno: 1, Experience: 5, Salary: 12000, Date_of_Joining: "2020-01-01" }, { Tname: "Teacher2", dno: 2, Experience: 8, Salary: 15000, Date_of_Joining: "2018-05-10" }, { Tname: "Teacher3", dno: 2, Experience:3, Salary: 9000, Date_of_Joining: "2021-02-15" } ])
+
+db.Department.insertMany([{ Dno: 1, Dname: "Department1" }, { Dno: 2, Dname: "Department2" } ])
+
+db.Students.insertMany([{ Sname: "Student1", Roll_No: 1, Class: "FE" }, { Sname: "Student2", Roll_No: 2, Class: "SE" }, { Sname: "Student3", Roll_No: 3, Class: "FE" }, { Sname: "xyz", Roll_No: 4, Class: "TE" }, { Sname: "Student5", Roll_No: 5, Class: "FE" }])
+
+
+db.Teachers.find({ dno: 2, Salary: { $gte: 10000 } })
+
+
+db.Students.find({ $or: [{ Roll_No: 2 }, { Sname: 'xyz' }] })
+
+
+db.Students.updateOne({ Roll_No: 5 }, { $set: { Sname: 'NewName' } })
+
+
+db.Students.deleteMany({ Class: 'FE' })
+
+
+db.Students.createIndex({ Roll_No: 1 })

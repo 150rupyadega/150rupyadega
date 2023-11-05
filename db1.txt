@@ -1,0 +1,64 @@
+CREATE TABLE Customer (
+    C_id INT PRIMARY KEY,
+    Cname VARCHAR(255),
+      City VARCHAR(255)
+    );
+
+CREATE TABLE Account (
+    C_id INT,
+    Acc_type VARCHAR(255),
+    Amount INT,
+    FOREIGN KEY (C_id) REFERENCES Customer(C_id)
+);
+
+INSERT INTO Customer (C_id, Cname, City) VALUES
+(1, 'John', 'Nashik'),
+(2, 'Seema', 'Aurangabad'),
+(3, 'Amita', 'Nagar'),
+(4, 'Rakesh', 'Pune'),
+(5, 'Samata', 'Nashik'),
+(6, 'Ankita', 'Chandwad'),
+(7, 'Bhavika', 'Pune'),
+(8, 'Deepa', 'Mumbai'),
+(9, 'Nitin', 'Nagpur'),
+(10, 'Pooja', 'Pune');
+
+INSERT INTO Account (C_id, Acc_type, Amount) VALUES
+(1, 'Current', 5000),
+(2,'Saving', 20000),
+(3, 'Saving', 70000),
+(4, 'Saving', 50000),
+(5, 'Current', 35000),
+(6, 'Loan', 30000),
+(7, 'Saving', 50000),
+(8, 'Saving', 90000),
+(9, 'Loan', 8000),
+(10, 'Current', 45000);
+
+SELECT c.Cname, a.Acc_type, a.Amount 
+FROM Customer c 
+JOIN Account a ON c.C_id = a.C_id 
+WHERE a.Acc_type = 'Saving';
+
+-- Natural Join
+SELECT * FROM Customer NATURAL JOIN Account;
+
+-- Left Join
+SELECT * FROM Customer LEFT JOIN Account ON Customer.C_id = Account.C_id;
+
+-- Right Join
+SELECT * FROM Customer RIGHT JOIN Account ON Customer.C_id = Account.C_id;
+
+SELECT * FROM Customer WHERE City = (SELECT City FROM Customer WHERE Cname = 'Pooja');
+
+SELECT * FROM Account WHERE Amount < (SELECT AVG(Amount) FROM Account);
+
+SELECT C_id FROM Account WHERE Amount = (SELECT MAX(Amount) FROM Account);
+
+SELECT a.Amount, a.Acc_type
+FROM Account a
+WHERE a.Amount = (SELECT MIN(Amount) FROM Account WHERE Acc_type = a.Acc_type);
+
+SELECT a.Amount
+FROM Account a
+WHERE a.Amount > (SELECT MAX(Amount) FROM Account WHERE Acc_type = 'Saving');

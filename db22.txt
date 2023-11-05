@@ -1,0 +1,15 @@
+db.createCollection("orderinfo")
+
+db.orderinfo.insertOne({ cust_id: 123, cust_name: "abc", status: "A", price: 250 })
+
+db.orderinfo.find({ price: { $gt: 250, $lt: 450 } }, { cust_name: 1, _id: 0 })
+
+
+db.orderinfo.updateOne({ cust_id: 123 }, { $inc: { price: 10 } })
+
+db.orderinfo.updateOne({ cust_id: 124 }, { $inc: { price: -5 } })
+
+db.orderinfo.updateMany({}, { $unset: { cust_name: "" } })
+
+
+db.orderinfo.find({ $or: [{ status: "A" }, { price: 250 }] }, { cust_name: 1, _id: 0 })

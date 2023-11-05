@@ -1,0 +1,64 @@
+CREATE TABLE student (
+    S_ID INT PRIMARY KEY,
+    name VARCHAR(255),
+    dept_name VARCHAR(255),
+    tot_cred INT
+);
+
+CREATE TABLE instructor (
+    T_ID INT PRIMARY KEY,
+    name VARCHAR(255),
+    dept_name VARCHAR(255),
+    salary DECIMAL(10, 2)
+);
+
+CREATE TABLE course (
+    course_id INT PRIMARY KEY,
+    title VARCHAR(255),
+    dept_name VARCHAR(255),
+    credits INT
+);
+
+INSERT INTO student (S_ID, name, dept_name, tot_cred) VALUES
+(1, 'John Doe', 'Computer', 120),
+(2, 'Jane Smith', 'Mathematics', 90),
+(3, 'Michael Johnson', 'Computer', 110),
+(4, 'Emily Williams', 'Physics', 100),
+(5, 'David Brown', 'Computer', 95);
+
+INSERT INTO instructor (T_ID, name, dept_name, salary) VALUES
+(1, 'Richard Anderson', 'Computer', 50000),
+(2, 'Jennifer Davis', 'Mathematics', 48000),
+(3, 'Daniel Wilson', 'Computer', 52000),
+(4, 'Laura Garcia', 'Physics', 45000),
+(5, 'Mark Taylor', 'Computer', 49000);
+
+INSERT INTO course (course_id, title, dept_name, credits) VALUES
+(101, 'Introduction to Computer Science', 'Computer', 3),
+(102, 'Calculus I', 'Mathematics', 4),
+(103, 'Data Structures', 'Computer', 3),
+(104, 'Physics I', 'Physics', 4),
+(105, 'Database Management Systems', 'Computer', 3);
+
+SELECT dept_name, AVG(salary) AS avg_salary
+FROM instructor
+GROUP BY dept_name
+HAVING AVG(salary) > 42000;
+
+UPDATE instructor
+SET salary = salary * 1.1
+WHERE dept_name = 'Computer';
+
+SELECT name
+FROM instructor
+WHERE name NOT IN ('Amol', 'Amit');
+
+SELECT name
+FROM student
+WHERE name LIKE '%am%';
+
+SELECT s.name
+FROM student s
+JOIN course c ON s.dept_name = c.dept_name
+WHERE s.dept_name = 'Computer'
+AND c.title = 'Dbms';

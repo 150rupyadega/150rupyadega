@@ -1,0 +1,20 @@
+CREATE TABLE emp (
+    Eno INT AUTO_INCREMENT PRIMARY KEY,
+    Ename VARCHAR(255) NOT NULL,
+    Address VARCHAR(255) DEFAULT 'Nashik',
+    Joindate DATE
+);
+
+ALTER TABLE emp AUTO_INCREMENT = 101;
+
+ALTER TABLE emp ADD Post VARCHAR(255);
+
+INSERT INTO emp (Ename, Address, Joindate, Post) VALUES
+('John Doe', 'New York', '2023-10-15', 'Manager'),
+('Jane Smith', 'Los Angeles', '2023-09-20', 'Supervisor'),
+('Michael Johnson', 'Chicago', '2023-11-01', 'Assistant');
+
+CREATE INDEX ename_index ON emp (Ename);
+
+CREATE VIEW emp_view AS
+SELECT Ename, Salary FROM emp;

@@ -1,0 +1,41 @@
+use dbms
+
+db.createCollection("orderinfo")
+
+db.orderinfo.insertMany([
+  {
+    cust_id: 123,
+    cust_name: "abc",
+    status: "A",
+    price: 250
+  },
+  {
+    cust_id: 124,
+    cust_name: "def",
+    status: "B",
+    price: 1500
+  },
+  {
+    cust_id: 125,
+    cust_name: "ghi",
+    status: "A",
+    price: 800
+  },
+  {
+    cust_id: 126,
+    cust_name: "jkl",
+    status: "A",
+    price: 350
+  }
+])
+
+db.orderinfo.aggregate([
+  { $match: { status: 'A' } },
+  { $group: { _id: "$cust_id", avgPrice: { $avg: "$price" } } }
+])
+
+db.orderinfo.find({ price: { $gt: 100, $lt: 1000 } }, { status: 1, _id: 0 })
+
+db.orderinfo.find({}, { _id: 0 })
+
+db.orderinfo.createIndex({ cust_id: 1 })

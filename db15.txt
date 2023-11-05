@@ -1,27 +1,30 @@
-use Institute;
+use Institute
 
-db.createCollection("Students");
+db.createCollection("student")
 
-db.Students.find();
+db.Students.insertMany([ { RollNo: 1, "Student Name": "Alice", Age: 20, Branch: "Computer", Address: { City: "Pune", State: "Maharashtra" }, Hobbies: ["Reading", "Swimming"] },{ RollNo: 2, "Student Name": "Bob", Age: 18, Branch: "Electronics", Address: { City: "Mumbai", State: "Maharashtra" }, Hobbies: ["Music", "Dancing"] },{ RollNo: 3, "Student Name": "Charlie", Age: 17, Branch: "Mechanical", Address: { City: "Delhi", State: "Delhi" }, Hobbies: ["Sports", "Cooking"] },{ RollNo: 4, "Student Name": "David", Age: 19, Branch: "Civil", Address: { City: "Kolkata", State: "West Bengal" }, Hobbies: ["Photography", "Gardening"] },{ RollNo: 5, "Student Name": "Eva", Age: 20, Branch: "Computer", Address: { City: "Pune", State: "Maharashtra" }, Hobbies: ["Painting", "Singing"] },{ RollNo: 6, "Student Name": "Frank", Age: 18, Branch: "Electrical", Address: { City: "Chennai", State: "Tamil Nadu" }, Hobbies: ["Gaming", "Hiking"] },{ RollNo: 7, "Student Name": "George", Age: 17, Branch: "IT", Address: { City: "Bangalore", State: "Karnataka" }, Hobbies: ["Chess", "Travelling"] },{ RollNo: 8, "Student Name": "Helen", Age: 19, Branch: "Computer", Address: { City: "Hyderabad", State: "Telangana" }, Hobbies: ["Dancing", "Reading"] },{ RollNo: 9, "Student Name": "Isaac", Age: 20, Branch: "Mechanical", Address: { City: "Mumbai", State: "Maharashtra" }, Hobbies: ["Football", "Coding"] },{ RollNo: 10, "Student Name": "Jane", Age: 18, Branch: "Civil", Address: { City: "Kolkata", State: "West Bengal" }, Hobbies: ["Swimming", "Sketching"] }])
 
-db.Students.find({ Age: { $gt: 15 } });
+db.Students.find({})
 
-db.Students.find().sort({ "Student Name": 1 });
+db.Students.find({ Age: { $gt: 15 } })
 
-db.Students.updateOne({ RollNo: 3 }, { $set: { Branch: "Computer" } });
+db.Students.find().sort({ "Student Name": 1 })
 
-db.Students.deleteOne({ RollNo: 1 });
+db.Students.updateOne({ RollNo: 3 }, { $set: { Branch: "Computer" } })
 
-db.Students.find({ "Student Name": /^A/ });
+db.Students.deleteOne({ RollNo: 1 })
 
-db.Students.count();
+db.Students.find({ "Student Name": /^A/ })
 
-db.Students.find().limit(5);
+db.Students.find().count()
 
-db.Students.find().skip(3);
+db.Students.find({}).limit(5)
 
-db.Students.find({ "Address.City": "Pune" }, { "Student Name": 1, _id: 0 });
+db.Students.find({}).skip(3)
 
-db.Students.find({}, { "Student Name": 1, _id: 0 });
+db.Students.find({ "Address.City": "Pune" }, { "Student Name": 1, _id: 0 })
 
-db.Students.drop();
+db.Students.find({}, { "Student Name": 1, _id: 0 })
+
+db.Students.drop()
+

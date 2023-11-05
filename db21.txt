@@ -1,0 +1,22 @@
+db.createCollection("orderinfo")
+
+db.orderinfo.insertOne({
+  cust_id: 123,
+  cust_name: "abc",
+  status: "A",
+  price: 250
+})
+
+db.orderinfo.updateMany({}, { $set: { Age: 30 } })
+
+db.orderinfo.createIndex({ cust_id: 1, status: 1, price: -1 })
+				OR
+db.orderinfo.createIndex({ cust_id: 1 }, { unique: true, dropDups: true })
+
+
+db.orderinfo.aggregate([
+  { $group: { _id: "$status", averagePrice: { $avg: "$price" } } }
+])
+
+
+db.orderinfo.updateMany({ status: "B" }, { $set: { cust_name: "NewName" } })
